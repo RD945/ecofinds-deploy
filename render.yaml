@@ -4,7 +4,7 @@ services:
     name: ecofinds-backend
     env: node
     plan: free
-    buildCommand: npm install && npx prisma generate && npm run build
+    buildCommand: npm install && npm run build
     startCommand: npx prisma migrate deploy && npm run start
     envVars:
       - key: DATABASE_URL

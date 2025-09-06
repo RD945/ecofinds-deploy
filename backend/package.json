@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node src/index.ts",
+    "dev": "npx prisma generate && ts-node src/index.ts",
     "start": "node dist/index.js",
     "build": "npx prisma generate && tsc",
     "postinstall": "npx prisma generate",
@@ -13,9 +13,6 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  },
   "dependencies": {
     "@prisma/client": "^6.15.0",
     "axios": "^1.11.0",
