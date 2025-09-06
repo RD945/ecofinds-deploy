@@ -1,0 +1,5 @@
+# .dockerignore for backend deployment
+node_modules
+npm-debug.log
+dist
+.env

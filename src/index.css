@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* EcoFinds Design System - Earth-inspired, sustainable design */
+
+@layer base {
+  :root {
+    /* EcoFinds Color Palette */
+    --background: 40 10% 97%; /* Soft off-white */
+    --foreground: 210 24% 16%; /* Dark charcoal */
+
+    --card: 0 0% 100%; /* Pure white for cards */
+    --card-foreground: 210 24% 16%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 24% 16%;
+
+    /* Forest green primary - welcoming and eco-friendly */
+    --primary: 145 25% 35%; /* Forest green #4A7C59 */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 145 25% 30%;
+
+    /* Light gray secondary */
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 210 24% 16%;
+
+    --muted: 220 13% 91%; /* Light tan/gray */
+    --muted-foreground: 220 9% 46%; /* Medium gray */
+
+    --accent: 34 20% 88%; /* Earthy light tan */
+    --accent-foreground: 210 24% 16%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 145 25% 35%;
+
+    --radius: 0.75rem;
+
+    /* Success states for eco-theme */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    /* Gradients */
+    --gradient-eco: linear-gradient(135deg, hsl(145 25% 35%), hsl(145 25% 45%));
+    --gradient-subtle: linear-gradient(180deg, hsl(40 10% 97%), hsl(220 13% 95%));
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-poppins;
+  }
+}
+
+@layer components {
+  /* Eco-friendly button variants */
+  .btn-eco {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 
+           rounded-lg px-6 py-3 font-medium transition-all duration-200 
+           hover:shadow-lg hover:scale-105;
+  }
+  
+  .btn-eco-outline {
+    @apply border-2 border-primary text-primary bg-transparent 
+           hover:bg-primary hover:text-primary-foreground
+           rounded-lg px-6 py-3 font-medium transition-all duration-200;
+  }
+
+  /* Enhanced input styles */
+  .input-eco {
+    @apply border border-input bg-card rounded-lg px-4 py-3
+           focus:ring-2 focus:ring-primary focus:border-primary
+           transition-all duration-200 placeholder:text-muted-foreground;
+  }
+
+  /* Card with eco-styling */
+  .card-eco {
+    @apply bg-card rounded-xl shadow-md border border-border
+           hover:shadow-lg transition-all duration-300 hover:-translate-y-1;
+  }
+
+  /* Floating action button */
+  .fab-eco {
+    @apply fixed bottom-6 right-6 bg-primary text-primary-foreground
+           rounded-full w-14 h-14 flex items-center justify-center
+           shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200
+           z-50;
+  }
+}

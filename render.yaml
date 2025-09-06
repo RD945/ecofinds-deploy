@@ -1,0 +1,26 @@
+services:
+  backend:
+    type: web
+    name: ecofinds-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: EMAIL_HOST
+        sync: false
+      - key: EMAIL_PORT
+        sync: false
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+    buildFilter:
+      paths:
+        - backend/**
+    autoDeploy: true
+    rootDir: backend

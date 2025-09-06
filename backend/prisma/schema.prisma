@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                               Int         @id @default(autoincrement())
+  username                         String      @unique
+  email                            String      @unique
+  password_hash                    String
+  created_at                       DateTime    @default(now())
+  products                         Product[]
+  cartItems                        CartItem[]
+  orders                           Order[]
+  reset_password_token             String?     @unique
+  reset_password_token_expires_at  DateTime?
+  two_factor_enabled               Boolean     @default(false)
+  two_factor_secret                String?
+  two_factor_expires_at            DateTime?
+}
+
+model Product {
+  id                      Int       @id @default(autoincrement())
+  title                   String
+  description             String    @db.Text
+  price                   Decimal   @db.Decimal(10, 2)
+  seller_id               Int
+  seller                  User      @relation(fields: [seller_id], references: [id], onDelete: Cascade)
+  category_id             Int
+  category                Category  @relation(fields: [category_id], references: [id])
+  created_at              DateTime  @default(now())
+  
+  // New detailed fields
+  quantity                Int       @default(1)
+  condition               String    @default("Used") // e.g., "New", "Used - Like New", "For Parts"
+  brand                   String?
+  model                   String?
+  year_of_manufacture     Int?
+  material                String?
+  color                   String?
+  dimension_l             Decimal?  @db.Decimal(10, 2)
+  dimension_w             Decimal?  @db.Decimal(10, 2)
+  dimension_h             Decimal?  @db.Decimal(10, 2)
+  is_original             Boolean   @default(true)
+  has_manual              Boolean   @default(false)
+  working_condition       String?   @db.Text
+
+  images      ProductImage[]
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+}
+
+model ProductImage {
+  id          Int      @id @default(autoincrement())
+  product_id  Int
+  product     Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  
+  url         String?  // For seeded URL-based images
+  imageData   Bytes?   // For user-uploaded blobs
+  mimetype    String?  // e.g., 'image/png'
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
+}
+
+model CartItem {
+  id         Int     @id @default(autoincrement())
+  user_id    Int
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  product_id Int
+  product    Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  quantity   Int     @default(1)
+
+  @@unique([user_id, product_id])
+}
+
+model Order {
+  id                     Int         @id @default(autoincrement())
+  user_id                Int
+  user                   User        @relation(fields: [user_id], references: [id])
+  total_amount           Decimal     @db.Decimal(10, 2)
+  order_date             DateTime    @default(now())
+  orderItems             OrderItem[]
+  
+  // Delivery address fields
+  delivery_address       String?
+  delivery_city          String?
+  delivery_state         String?
+  delivery_postal_code   String?
+  delivery_country       String?
+  delivery_latitude      Decimal?    @db.Decimal(10, 7)
+  delivery_longitude     Decimal?    @db.Decimal(10, 7)
+}
+
+model OrderItem {
+  id         Int     @id @default(autoincrement())
+  order_id   Int
+  order      Order   @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  product_id Int
+  product    Product @relation(fields: [product_id], references: [id])
+  quantity   Int
+  price      Decimal @db.Decimal(10, 2)
+}
