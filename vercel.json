@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-  "destination": "https://ccofinds.onrender.com/api/:path*"
+      "destination": "https://ecofinds-deploy.onrender.com/api/:path*"
     }
   ]
 }
