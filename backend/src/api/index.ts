@@ -5,6 +5,7 @@ import cartRouter from './cart/cart.routes';
 import orderRouter from './orders/orders.routes';
 import categoryRouter from './categories/categories.routes';
 import imageRouter from './images/images.routes';
+import seedRouter from './seed/seed.routes';
 
 const router = Router();
 
@@ -14,6 +15,7 @@ router.use('/cart', cartRouter);
 router.use('/orders', orderRouter);
 router.use('/categories', categoryRouter);
 router.use('/images', imageRouter);
+router.use('/seed', seedRouter);
 
 
 export default router;
