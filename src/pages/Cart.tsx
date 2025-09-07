@@ -216,14 +216,6 @@ export const Cart = () => {
                           <p className="font-bold text-lg">
                             ₹{(parseFloat(item.product.price) * item.quantity).toFixed(2)}
                           </p>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleRemoveItem(item.product.id)}
-                            className="text-muted-foreground hover:text-destructive h-8 w-8"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
                         </div>
                       </div>
                     </div>
