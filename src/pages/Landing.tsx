@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ServerCrash, RefreshCw, LayoutDashboard } from "lucide-react";
 import { ProductCardSkeleton } from "@/components/ProductCardSkeleton";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "@/hooks/use-toast";
 
 
 interface ProductImage {
@@ -38,6 +38,7 @@ export const Landing = () => {
   const [serverError, setServerError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProductId, setLoadingProductId] = useState<number | null>(null);
+  const [addingToCartId, setAddingToCartId] = useState<number | null>(null);
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -87,6 +88,9 @@ export const Landing = () => {
         navigate('/auth');
         return;
     }
+    
+    setAddingToCartId(productId);
+    
     try {
         // Add to cart first (fast operation)
         await api.post('/cart', { productId, quantity: 1});
@@ -95,10 +99,17 @@ export const Landing = () => {
         const { data } = await api.get('/cart');
         setCartCount(data.reduce((sum: number, item: any) => sum + item.quantity, 0));
         
-        // No notification for add to cart as requested by user
+        // Find product details for notification
+        const product = products.find(p => p.id === productId);
+        
+        // Show success toast notification
+        toast({
+          title: "Added to Cart! 🛒",
+          description: `${product?.title || 'Product'} has been added to your cart`,
+          duration: 3000,
+        });
         
         // Send email notification in background (don't wait for it)
-        const product = products.find(p => p.id === productId);
         if (product && user.email) {
             // Fire and forget - don't await this
             api.post('/auth/send-cart-notification', {
@@ -113,9 +124,20 @@ export const Landing = () => {
         
     } catch (error) {
         console.error("Failed to add to cart", error);
+        
+        // Show error toast
+        toast({
+          title: "Failed to Add to Cart",
+          description: "There was an error adding the item to your cart. Please try again.",
+          variant: "destructive",
+          duration: 3000,
+        });
+        
         if ((error as any).response?.status === 401) {
             navigate('/auth');
         }
+    } finally {
+        setAddingToCartId(null);
     }
   };
 
@@ -260,7 +282,7 @@ export const Landing = () => {
                 category={product.category.name}
                 image={product.images && product.images.length > 0 ? product.images[0] : null}
                 sellerId={product.seller.id}
-                isLoading={loadingProductId === product.id}
+                isLoading={loadingProductId === product.id || addingToCartId === product.id}
                 onAddToCart={() => handleAddToCart(product.id)}
                 onCardClick={handleCardClick}
               />

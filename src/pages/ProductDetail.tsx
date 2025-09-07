@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { ProductDetailSkeleton } from "@/components/ProductDetailSkeleton";
 import { cn } from "@/lib/utils";
 import { ImageWithFade } from "@/components/ImageWithFade";
+import { toast } from "@/hooks/use-toast";
 
 interface ProductImage {
     id: number;
@@ -45,6 +46,7 @@ export const ProductDetail = () => {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [activeImage, setActiveImage] = useState<string | null>(null);
+  const [addingToCart, setAddingToCart] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -76,14 +78,46 @@ export const ProductDetail = () => {
         navigate('/auth');
         return;
     }
+    
+    setAddingToCart(true);
+    
     try {
       await api.post('/cart', { productId: product!.id, quantity: 1 });
-      // No notification for add to cart as requested by user
+      
+      // Show success toast notification
+      toast({
+        title: "Added to Cart! 🛒",
+        description: `${product!.title} has been added to your cart`,
+        duration: 3000,
+      });
+      
+      // Send email notification in background (don't wait for it)
+      if (user.email) {
+          api.post('/auth/send-cart-notification', {
+              email: user.email,
+              productName: product!.title,
+              productPrice: product!.price,
+          }).catch(emailError => {
+              console.error("Failed to send cart notification email:", emailError);
+          });
+      }
+      
     } catch (error) {
         console.error("Failed to add to cart", error);
+        
+        // Show error toast
+        toast({
+          title: "Failed to Add to Cart",
+          description: "There was an error adding the item to your cart. Please try again.",
+          variant: "destructive", 
+          duration: 3000,
+        });
+        
         if ((error as any).response?.status === 401) {
             navigate('/auth');
         }
+    } finally {
+        setAddingToCart(false);
     }
   };
 
@@ -166,9 +200,14 @@ export const ProductDetail = () => {
                     )}
 
                     { user?.id !== product.seller.id && (
-                        <Button size="lg" className="w-full" onClick={handleAddToCart} disabled={product.quantity === 0}>
+                        <Button 
+                            size="lg" 
+                            className="w-full" 
+                            onClick={handleAddToCart} 
+                            disabled={product.quantity === 0 || addingToCart}
+                        >
                             <ShoppingCart className="w-5 h-5 mr-2" />
-                            {product.quantity > 0 ? "Add to Cart" : "Out of Stock"}
+                            {addingToCart ? "Adding..." : product.quantity > 0 ? "Add to Cart" : "Out of Stock"}
                         </Button>
                     )}
 
