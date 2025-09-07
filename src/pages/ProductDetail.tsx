@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProductDetailSkeleton } from "@/components/ProductDetailSkeleton";
+import { LoadingOverlay } from "@/components/LoadingOverlay";
 import { cn } from "@/lib/utils";
 import { ImageWithFade } from "@/components/ImageWithFade";
 import { toast } from "@/hooks/use-toast";
@@ -123,6 +124,9 @@ export const ProductDetail = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Loading Overlay for Add to Cart */}
+      {addingToCart && <LoadingOverlay message="Adding to Cart..." />}
+      
       <header className="bg-card border-b border-border p-4">
         <div className="container mx-auto">
           <Button variant="ghost" onClick={() => navigate(-1)}>

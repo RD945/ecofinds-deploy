@@ -64,8 +64,11 @@ export const ProductCard = ({
         onClick={handleCardClick}
     >
       {isLoading && (
-        <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 flex items-center justify-center">
-          <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        <div className="absolute inset-0 bg-background/90 backdrop-blur-sm z-10 flex items-center justify-center">
+          <div className="flex flex-col items-center space-y-2">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <span className="text-sm font-medium text-foreground">Loading...</span>
+          </div>
         </div>
       )}
       <ImageWithFade

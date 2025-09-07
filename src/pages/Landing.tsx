@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { Navigation } from "@/components/Navigation";
 import { CategoryFilter } from "@/components/CategoryFilter";
+import { LoadingOverlay } from "@/components/LoadingOverlay";
 import heroImage from "@/assets/hero-image.jpg";
 import api from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
@@ -39,9 +40,11 @@ export const Landing = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProductId, setLoadingProductId] = useState<number | null>(null);
   const [addingToCartId, setAddingToCartId] = useState<number | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
 
   const fetchProducts = async () => {
     setIsLoading(true);
+    setIsSearching(true);
     setServerError(false);
     try {
       const params = new URLSearchParams();
@@ -60,6 +63,7 @@ export const Landing = () => {
       }
     } finally {
       setIsLoading(false);
+      setIsSearching(false);
     }
   };
 
@@ -156,6 +160,9 @@ export const Landing = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Loading Overlay for search/filter operations */}
+      {isSearching && !isLoading && <LoadingOverlay message="Searching products..." />}
+      
       <Navigation
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -238,10 +245,24 @@ export const Landing = () => {
       {/* Products Grid / Error States */}
       <main className="container mx-auto px-4 py-8">
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {Array.from({ length: 8 }).map((_, index) => (
-                <ProductCardSkeleton key={index} />
-            ))}
+          <div className="space-y-6">
+            {/* Loading Header */}
+            <div className="text-center py-8">
+              <div className="flex items-center justify-center space-x-2 mb-4">
+                <div className="w-8 h-8 bg-primary/20 rounded-full animate-pulse"></div>
+                <div className="w-8 h-8 bg-primary/30 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                <div className="w-8 h-8 bg-primary/40 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+              </div>
+              <h2 className="text-2xl font-semibold text-foreground mb-2">Loading Products</h2>
+              <p className="text-muted-foreground">Fetching the latest sustainable products for you...</p>
+            </div>
+            
+            {/* Loading Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {Array.from({ length: 8 }).map((_, index) => (
+                  <ProductCardSkeleton key={index} />
+              ))}
+            </div>
           </div>
         ) : serverError ? (
           <div className="text-center py-12">
