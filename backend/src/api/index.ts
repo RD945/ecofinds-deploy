@@ -9,6 +9,16 @@ import seedRouter from './seed/seed.routes';
 
 const router = Router();
 
+// Health check endpoint for monitoring services like UptimeRobot
+router.get('/', (req, res) => {
+  res.status(200).json({ 
+    status: 'OK', 
+    message: 'EcoFinds API is running',
+    timestamp: new Date().toISOString(),
+    version: '1.0.0'
+  });
+});
+
 router.use('/auth', authRouter);
 router.use('/products', productRouter);
 router.use('/cart', cartRouter);
