@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '../../lib/prisma';
 
 export async function getCart(userId: number) {
   return prisma.cartItem.findMany({
@@ -8,7 +6,14 @@ export async function getCart(userId: number) {
     include: { 
       product: {
         include: {
-          images: true
+          images: {
+            take: 1,
+            select: {
+              id: true,
+              url: true,
+              mimetype: true,
+            }
+          }
         }
       }
     },

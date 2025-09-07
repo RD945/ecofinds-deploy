@@ -1,6 +1,5 @@
-import { Prisma, PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { Prisma } from '@prisma/client';
+import { prisma } from '../../lib/prisma';
 
 export async function getProducts(category?: string, search?: string) {
     const where: Prisma.ProductWhereInput = {};
@@ -17,7 +16,12 @@ export async function getProducts(category?: string, search?: string) {
   return prisma.product.findMany({
       where,
       include: {
-          category: true,
+          category: {
+              select: {
+                  id: true,
+                  name: true,
+              }
+          },
           seller: {
               select: {
                   id: true,
@@ -29,6 +33,7 @@ export async function getProducts(category?: string, search?: string) {
               select: {
                   id: true,
                   url: true,
+                  mimetype: true,
               }
           },
       },
@@ -42,14 +47,25 @@ export async function getProductById(id: number) {
   return prisma.product.findUnique({ 
       where: { id },
       include: {
-          category: true,
+          category: {
+              select: {
+                  id: true,
+                  name: true,
+              }
+          },
           seller: {
               select: {
                   id: true,
                   username: true,
               }
           },
-          images: true,
+          images: {
+              select: {
+                  id: true,
+                  url: true,
+                  mimetype: true,
+              }
+          },
       }
     });
 }

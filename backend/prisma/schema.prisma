@@ -58,6 +58,12 @@ model Product {
   images      ProductImage[]
   cartItems   CartItem[]
   orderItems  OrderItem[]
+  
+  // Add indexes for better query performance
+  @@index([category_id])
+  @@index([seller_id])
+  @@index([created_at])
+  @@index([title])
 }
 
 model ProductImage {
@@ -68,6 +74,8 @@ model ProductImage {
   url         String?  // For seeded URL-based images
   imageData   Bytes?   // For user-uploaded blobs
   mimetype    String?  // e.g., 'image/png'
+  
+  @@index([product_id])
 }
 
 model Category {
@@ -85,6 +93,7 @@ model CartItem {
   quantity   Int     @default(1)
 
   @@unique([user_id, product_id])
+  @@index([user_id])
 }
 
 model Order {

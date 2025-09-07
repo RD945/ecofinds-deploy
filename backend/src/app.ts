@@ -1,10 +1,14 @@
 import express from 'express';
 import cors from 'cors';
+import compression from 'compression';
 import { json } from 'body-parser';
 import api from './api';
 import path from 'path';
 
 const app = express();
+
+// Enable gzip compression for all responses
+app.use(compression());
 
 app.use(cors({
     origin: [
@@ -15,7 +19,9 @@ app.use(cors({
     ],
     credentials: true
 }));
-app.use(json());
+
+// Increase JSON payload limit and add compression
+app.use(json({ limit: '10mb' }));
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.resolve('public')));

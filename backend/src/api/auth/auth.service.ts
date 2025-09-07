@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import { hashPassword } from '../../utils/password';
 import { sendEmail } from '../../utils/mailer';
+import { prisma } from '../../lib/prisma';
 import crypto from 'crypto';
-
-const prisma = new PrismaClient();
 
 function generateOtp() {
     return crypto.randomInt(100000, 1000000).toString(); // 6-digit OTP
