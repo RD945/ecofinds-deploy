@@ -4,6 +4,8 @@ Welcome to the official repository for EcoFinds, a full-stack e-commerce web app
 
 This project was built to demonstrate a complete development lifecycle, from setting up a custom backend and database to integrating it with a modern React frontend.
 
+Deployemnt Live at: https://ecofinds-deploy.vercel.app/
+
 ## System Architecture
 
 ![EcoFinds System Architecture](flowchart.png)
