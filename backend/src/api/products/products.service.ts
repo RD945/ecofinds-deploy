@@ -29,7 +29,6 @@ export async function getProducts(category?: string, search?: string) {
               }
           },
           images: {
-              take: 1,
               select: {
                   id: true,
                   url: true,
