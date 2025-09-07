@@ -35,7 +35,10 @@ export const Auth = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [mode, setMode] = useState<'login' | 'signup'>(searchParams.get('mode') || 'login' as 'login' | 'signup');
+  const [mode, setMode] = useState<'login' | 'signup'>(() => {
+    const modeParam = searchParams.get('mode');
+    return (modeParam === 'login' || modeParam === 'signup') ? modeParam : 'login';
+  });
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<'credentials' | 'otp'>('credentials');
   const [userId, setUserId] = useState<number | null>(null);
@@ -78,8 +81,17 @@ export const Auth = () => {
             login(data.token, data.user);
             navigate("/dashboard");
         } else { // Signup
-            await api.post('/auth/register', values);
-            setMode('login'); // Switch to login tab after successful registration
+            const { data } = await api.post('/auth/register', values);
+            if (data.twoFactorEnabled) {
+                // New user with 2FA enabled - switch to OTP verification
+                setUserId(data.userId);
+                setMode('login'); // Switch to login tab
+                setStep('otp'); // Go directly to OTP step
+                form.reset({ otp: "" });
+            } else {
+                // Fallback if 2FA is not enabled (shouldn't happen with new logic)
+                setMode('login');
+            }
         }
     } catch (err: any) {
         if (axios.isAxiosError(err) && err.response) {

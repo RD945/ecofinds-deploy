@@ -17,6 +17,7 @@ export async function createUser(username: string, email: string, password: stri
         username,
         email,
         password_hash,
+        two_factor_enabled: true, // Enable 2FA by default for new users
       },
     });
   } catch (error: any) {

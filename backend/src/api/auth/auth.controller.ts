@@ -16,14 +16,21 @@ export async function register(req: Request, res: Response) {
   try {
     const { username, email, password } = registerSchema.parse(req.body);
     const user = await authService.createUser(username, email, password);
-    const token = generateToken({ userId: user.id });
+    
+    // Since 2FA is enabled by default, generate and send OTP for new users
+    await authService.generateAndSendOtp(user);
     
     // Schedule welcome suggestions email to be sent after 1 minute (new user)
     setTimeout(async () => {
       await sendWelcomeSuggestions(email, username, false);
     }, 60000); // 60 seconds = 1 minute
     
-    res.status(201).json({ token });
+    // Return 2FA flow instead of immediate token for new users
+    res.status(201).json({ 
+      message: 'Account created successfully. Please check your email for the verification code to complete login.',
+      twoFactorEnabled: true, 
+      userId: user.id 
+    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ message: 'Invalid input', errors: error.issues });
