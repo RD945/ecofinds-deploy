@@ -1,108 +1,109 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* EcoFinds Design System - Earth-inspired, sustainable design */
+/* EcoFinds Premium Design System - Modern, Professional E-commerce */
 
 @layer base {
   :root {
-    /* EcoFinds Color Palette */
-    --background: 40 10% 97%; /* Soft off-white */
-    --foreground: 210 24% 16%; /* Dark charcoal */
+    /* Modern Color Palette - Vibrant Emerald with Premium Neutrals */
+    --background: 0 0% 100%;
+    /* Pure white */
+    --foreground: 240 10% 3.9%;
+    /* Almost black */
 
-    --card: 0 0% 100%; /* Pure white for cards */
-    --card-foreground: 210 24% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 24% 16%;
+    --popover-foreground: 240 10% 3.9%;
 
-    /* Forest green primary - welcoming and eco-friendly */
-    --primary: 145 25% 35%; /* Forest green #4A7C59 */
+    /* Professional Dark Forest Green - Amazon/Shopify-inspired */
+    --primary: 142 71% 38%;
+    /* Darker forest green #1E9B4E */
+    /* Forest green #22C55E */
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 145 25% 30%;
+    --primary-hover: 142 71% 33%;
 
-    /* Light gray secondary */
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 210 24% 16%;
+    /* Elegant secondary */
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
 
-    --muted: 220 13% 91%; /* Light tan/gray */
-    --muted-foreground: 220 9% 46%; /* Medium gray */
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
 
-    --accent: 34 20% 88%; /* Earthy light tan */
-    --accent-foreground: 210 24% 16%;
+    --accent: 158 64% 96%;
+    /* Light emerald tint */
+    --accent-foreground: 158 64% 20%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 145 25% 35%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 158 64% 52%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    /* Success states for eco-theme */
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 100%;
+    /* Premium Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(142 71% 38%), hsl(142 71% 33%));
+    --gradient-hero: linear-gradient(135deg, hsl(142 71% 38% / 0.1), hsl(142 71% 33% / 0.05));
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(240 4.8% 99%));
 
-    /* Gradients */
-    --gradient-eco: linear-gradient(135deg, hsl(145 25% 35%), hsl(145 25% 45%));
-    --gradient-subtle: linear-gradient(180deg, hsl(40 10% 97%), hsl(220 13% 95%));
+    /* Premium shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 158 64% 52%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 142 71% 38%;
+    --primary-foreground: 240 5.9% 10%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 158 64% 52%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary: 142 71% 38%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 158 64% 52%;
   }
 }
 
@@ -112,42 +113,169 @@
   }
 
   body {
-    @apply bg-background text-foreground font-poppins;
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(135deg,
+        hsl(0, 0%, 100%) 0%,
+        hsl(142, 20%, 98%) 50%,
+        hsl(0, 0%, 99%) 100%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl sm:text-5xl lg:text-6xl font-extrabold;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    @apply text-3xl sm:text-4xl lg:text-5xl font-bold;
+    letter-spacing: -0.02em;
+  }
+
+  h3 {
+    @apply text-2xl sm:text-3xl;
   }
 }
 
 @layer components {
-  /* Eco-friendly button variants */
+
+  /* Premium Button Styles */
   .btn-eco {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 
-           rounded-lg px-6 py-3 font-medium transition-all duration-200 
-           hover:shadow-lg hover:scale-105;
+    @apply relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-emerald-500 text-white font-semibold rounded-full px-8 py-4 transition-all duration-300 ease-out hover:shadow-lg hover:shadow-primary/50 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
   }
-  
+
   .btn-eco-outline {
-    @apply border-2 border-primary text-primary bg-transparent 
-           hover:bg-primary hover:text-primary-foreground
-           rounded-lg px-6 py-3 font-medium transition-all duration-200;
+    @apply relative inline-flex items-center justify-center gap-2 border-2 border-primary text-primary bg-transparent font-semibold rounded-full px-8 py-4 transition-all duration-300 ease-out hover:bg-primary hover:text-white hover:shadow-md active:scale-95;
   }
 
-  /* Enhanced input styles */
-  .input-eco {
-    @apply border border-input bg-card rounded-lg px-4 py-3
-           focus:ring-2 focus:ring-primary focus:border-primary
-           transition-all duration-200 placeholder:text-muted-foreground;
+  .btn-eco-ghost {
+    @apply relative inline-flex items-center justify-center gap-2 text-primary font-medium rounded-full px-6 py-3 transition-all duration-200 hover:bg-primary/10 hover:text-primary active:scale-95;
   }
 
-  /* Card with eco-styling */
+  /* Glassmorphism Effect */
+  .glass {
+    @apply bg-background/80 backdrop-blur-md;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-sm border border-border/50;
+  }
+
+  /* Premium Card Styles */
   .card-eco {
-    @apply bg-card rounded-xl shadow-md border border-border
-           hover:shadow-lg transition-all duration-300 hover:-translate-y-1;
+    @apply bg-card rounded-2xl shadow-md border border-border/50 transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 hover:border-primary/20;
   }
 
-  /* Floating action button */
-  .fab-eco {
-    @apply fixed bottom-6 right-6 bg-primary text-primary-foreground
-           rounded-full w-14 h-14 flex items-center justify-center
-           shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200
-           z-50;
+  .card-premium {
+    @apply bg-gradient-to-br from-card to-card/95 rounded-2xl shadow-lg border border-border/60 transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-2 hover:border-primary/30;
   }
+
+  /* Modern Input Styles */
+  .input-eco {
+    @apply w-full rounded-xl border-2 border-input bg-background px-4 py-3 text-sm ring-offset-background transition-all duration-200 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Badge Styles */
+  .badge-eco {
+    @apply inline-flex items-center justify-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary transition-colors duration-200;
+  }
+
+  /* Gradient Text */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-emerald-600 bg-clip-text text-transparent;
+  }
+
+  /* Floating Action Button */
+  .fab-eco {
+    @apply fixed bottom-8 right-8 z-50 bg-gradient-to-r from-primary to-emerald-500 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl shadow-primary/40 transition-all duration-300 ease-out hover:shadow-2xl hover:shadow-primary/60 hover:scale-110 active:scale-95;
+  }
+
+  /* Section Container */
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20;
+  }
+
+  /* Animations */
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes pulse-slow {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.6s ease-out;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.6s ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.8s ease-out;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Hero Pattern Background */
+  .hero-pattern {
+    background-image:
+      radial-gradient(circle at 20% 50%, hsla(158, 64%, 52%, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, hsla(142, 71%, 45%, 0.08) 0%, transparent 50%);
+  }
+
+
 }

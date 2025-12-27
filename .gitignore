@@ -24,3 +24,7 @@ backend/public/uploads/
 *.njsproj
 *.sln
 *.sw?
+*DEPLOYMENT_GUIDE.md
+*QUICK_REFERENCE.md
+*REPO_ANALYSIS.md
+*SETUP_BACKEND_DOCKER.md

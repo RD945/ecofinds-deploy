@@ -26,65 +26,65 @@ interface CartItem {
 }
 
 export const Cart = () => {
-    const { user } = useAuth();
-    const navigate = useNavigate();
-    const [cartItems, setCartItems] = useState<CartItem[]>([]);
-    const [showPayment, setShowPayment] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [showPayment, setShowPayment] = useState(false);
 
-    useEffect(() => {
-        const fetchCartItems = async () => {
-            if (user) {
-                try {
-                    const { data } = await api.get('/cart');
-                    console.log("Cart data received:", data);
-                    setCartItems(data);
-                } catch (error) {
-                    console.error("Failed to fetch cart items", error);
-                }
-            }
-        };
-        fetchCartItems();
-    }, [user]);
-
-    const handleRemoveItem = async (productId: number) => {
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      if (user) {
         try {
-            await api.delete(`/cart/${productId}`);
-            setCartItems(cartItems.filter(item => item.product.id !== productId));
+          const { data } = await api.get('/cart');
+          console.log("Cart data received:", data);
+          setCartItems(data);
         } catch (error) {
-            console.error("Failed to remove item from cart", error);
+          console.error("Failed to fetch cart items", error);
         }
+      }
     };
+    fetchCartItems();
+  }, [user]);
 
-    const handleCheckout = () => {
-        setShowPayment(true);
-    };
+  const handleRemoveItem = async (productId: number) => {
+    try {
+      await api.delete(`/cart/${productId}`);
+      setCartItems(cartItems.filter(item => item.product.id !== productId));
+    } catch (error) {
+      console.error("Failed to remove item from cart", error);
+    }
+  };
 
-    const handlePaymentConfirm = async (paymentData: PaymentData) => {
-        try {
-            // Process the actual checkout with delivery location
-            await api.post('/orders/checkout', {
-                deliveryLocation: paymentData.deliveryLocation
-            });
-            
-            // Send payment confirmation email
-            await api.post('/auth/send-payment-confirmation', {
-                email: user?.email,
-                orderTotal: total,
-                itemCount: cartItems.length,
-                paymentData: {
-                    cardNumber: paymentData.cardNumber,
-                    cardholderName: paymentData.cardholderName,
-                },
-                deliveryLocation: paymentData.deliveryLocation
-            });
-            
-            setShowPayment(false);
-            navigate('/dashboard');
-        } catch (error) {
-            console.error("Checkout failed", error);
-            throw error;
-        }
-    };
+  const handleCheckout = () => {
+    setShowPayment(true);
+  };
+
+  const handlePaymentConfirm = async (paymentData: PaymentData) => {
+    try {
+      // Process the actual checkout with delivery location
+      await api.post('/orders/checkout', {
+        deliveryLocation: paymentData.deliveryLocation
+      });
+
+      // Send payment confirmation email
+      await api.post('/auth/send-payment-confirmation', {
+        email: user?.email,
+        orderTotal: total,
+        itemCount: cartItems.length,
+        paymentData: {
+          cardNumber: paymentData.cardNumber,
+          cardholderName: paymentData.cardholderName,
+        },
+        deliveryLocation: paymentData.deliveryLocation
+      });
+
+      setShowPayment(false);
+      navigate('/dashboard');
+    } catch (error) {
+      console.error("Checkout failed", error);
+      throw error;
+    }
+  };
 
   const subtotal = cartItems.reduce((sum, item) => {
     return sum + parseFloat(item.product.price) * item.quantity;
@@ -137,7 +137,7 @@ export const Cart = () => {
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
               <h2 className="text-2xl font-semibold mb-4">Cart Items</h2>
-              
+
               {cartItems.map((item) => (
                 <Card key={item.id} className="card-eco">
                   <CardContent className="p-6">
@@ -147,16 +147,16 @@ export const Cart = () => {
                         {item.product.images && item.product.images.length > 0 ? (
                           <ImageWithFade
                             src={
-                              item.product.images[0].url || 
-                              `${item.product.images[0].url || `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/images/${item.product.images[0].id}`}`
-                            } 
+                              item.product.images[0].url ||
+                              `http://localhost:5000/api/images/${item.product.images[0].id}`
+                            }
                             alt={item.product.title}
                             className="w-full h-full object-cover"
                             wrapperClassName="w-full h-full"
                             onError={(e) => {
                               console.error("Image failed to load:", e);
                               console.log("Image data:", item.product.images[0]);
-                              console.log("Constructed URL:", item.product.images[0].url || `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/images/${item.product.images[0].id}`);
+                              console.log("Constructed URL:", item.product.images[0].url || `http://localhost:5000/api/images/${item.product.images[0].id}`);
                             }}
                           />
                         ) : (
@@ -194,7 +194,7 @@ export const Cart = () => {
                           <Button
                             variant="outline"
                             size="icon"
-                            onClick={() => {/* Quantity decrement not implemented */}}
+                            onClick={() => {/* Quantity decrement not implemented */ }}
                             className="h-8 w-8"
                           >
                             <Minus className="w-3 h-3" />
@@ -205,7 +205,7 @@ export const Cart = () => {
                           <Button
                             variant="outline"
                             size="icon"
-                            onClick={() => {/* Quantity increment not implemented */}}
+                            onClick={() => {/* Quantity increment not implemented */ }}
                             className="h-8 w-8"
                           >
                             <Plus className="w-3 h-3" />
@@ -278,7 +278,7 @@ export const Cart = () => {
           </div>
         )}
       </main>
-      
+
       <PaymentConfirmation
         isOpen={showPayment}
         onClose={() => setShowPayment(false)}
