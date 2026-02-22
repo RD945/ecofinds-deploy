@@ -262,3 +262,10 @@ During the development of this project, we encountered several common but critic
 *   **The Solution**: The fix was to meticulously re-order the `deleteMany` operations in `prisma/seed.ts`. The correct deletion order must start from the "bottom" of the dependency chain and work its way up. The final, correct order is: `OrderItem`, `CartItem`, `ProductImage`, `Order`, `Product`, `User`, `Category`. This ensures that by the time the script tries to delete a `Product`, for instance, all records that depend on it have already been removed.
 
 By systematically diagnosing and fixing these issues, we transformed the application from a buggy prototype into a robust and reliable full-stack project.
+
+---
+
+## Contributors
+
+Reetam Dan  
+Shadan Ahmad 
